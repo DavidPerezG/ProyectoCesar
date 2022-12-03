@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('oficinas', function (Blueprint $table) {
             $table->id();
-            $table->string('direccion');
+            $table->string('direccion')->nullable();
             $table->string('localidad');
             $table->string('provincia');
             $table->timestamps();

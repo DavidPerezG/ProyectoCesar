@@ -12,9 +12,10 @@ class EmpleadosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function obtenerTodos()
     {
-        //
+        $empleados = Empleados::paginate(20);
+        return $empleados;
     }
 
     /**
@@ -23,9 +24,21 @@ class EmpleadosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function crear(Request $request){
+        $data = $this->validateRequest($request);
+
+        $Empleados = Empleados::create($data);
+        if($Empleados){
+            return response ([
+                'message' => 'Se creo con exito el Empleado',
+                'id' => $Empleados['id']
+            ], 201);
+        } else {
+            return response ([
+                'message' => 'Error al crear',
+                'id' => $Empleados['id']
+            ], 201);
+        }
     }
 
     /**
@@ -34,9 +47,9 @@ class EmpleadosController extends Controller
      * @param  \App\Models\Empleados  $empleados
      * @return \Illuminate\Http\Response
      */
-    public function show(Empleados $empleados)
-    {
-        //
+    public function obtener($id){
+        $empleado =  Empleados::find($id);
+        return $empleado;
     }
 
     /**
@@ -46,9 +59,20 @@ class EmpleadosController extends Controller
      * @param  \App\Models\Empleados  $empleados
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empleados $empleados)
+    public function modificar($id, Request $request)
     {
-        //
+        $Empleados = Empleados::find($id);
+        if(!$Empleados) {
+            return response([
+                'message' => 'el Empleado con el id ' . $id . ' no existe en la BD'
+            ], 404);
+        }
+
+        $data = $this->validateRequestPut($request);
+        $Empleados->update($data);
+        return response([
+            'message' => 'Se modifico el Empleado con exito'
+        ]);
     }
 
     /**
@@ -57,8 +81,38 @@ class EmpleadosController extends Controller
      * @param  \App\Models\Empleados  $empleados
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Empleados $empleados)
+    public function eliminar($id)
     {
-        //
+        $Oficina = Empleados::find($id);
+
+        if(!$Oficina) {
+            return response([
+                'message' => 'El Empleado con el id ' . $id . ' no existe en la BD'
+            ], 404);
+        }
+
+        $Oficina->delete();
+        return response ([
+            'message' => 'Se elimino con exito'
+        ]);
+    }
+
+
+    private function validateRequest($request){
+        return $request->validate([
+            'nombre' => 'required|string',
+            'apellidos' => 'required|string',
+            'salario' => 'required|string',
+            'fecha' => 'date|required',
+        ]);
+    }
+
+    private function validateRequestPut($request){
+        return $request->validate([
+            'nombre' => 'string',
+            'apellidos' => 'string',
+            'salario' => 'string',
+            'fecha' => 'date',
+        ]);
     }
 }
