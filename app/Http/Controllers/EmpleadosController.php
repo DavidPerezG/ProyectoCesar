@@ -14,7 +14,8 @@ class EmpleadosController extends Controller
      */
     public function obtenerTodos()
     {
-        $empleados = Empleados::paginate(20);
+        $empleados = Empleados::with('oficinas')->get();
+
         return $empleados;
     }
 
@@ -48,7 +49,7 @@ class EmpleadosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function obtener($id){
-        $empleado =  Empleados::find($id);
+        $empleado = Empleados::find($id)->with('oficinas')->first();
         return $empleado;
     }
 
@@ -104,6 +105,7 @@ class EmpleadosController extends Controller
             'apellidos' => 'required|string',
             'salario' => 'required|string',
             'fecha' => 'date|required',
+            'id_oficina' => 'integer'
         ]);
     }
 

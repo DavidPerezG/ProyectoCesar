@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\OficinasController;
+use App\Http\Controllers\ReservasController;
+use App\Http\Controllers\VehiculosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +34,14 @@ Route::post('/empleados', [EmpleadosController::class, 'crear']);
 Route::put('/empleados/{id}', [EmpleadosController::class, 'modificar']);
 Route::delete('/empleados/{id}', [EmpleadosController::class, 'eliminar']);
 
+Route::get('/vehiculos/{id}', [VehiculosController::class, 'obtener']);
+Route::get('/vehiculos/', [VehiculosController::class, 'obtenerTodos']);
+Route::post('/vehiculos', [VehiculosController::class, 'crear']);
+Route::put('/vehiculos/{id}', [VehiculosController::class, 'modificar']);
+Route::delete('/vehiculos/{id}', [VehiculosController::class, 'eliminar']);
+
+Route::get('/reservas/{id}', [ReservasController::class, 'obtener']);
+Route::get('/reservas/', [ReservasController::class, 'obtenerTodos']);
+Route::post('/reservas', [ReservasController::class, 'crear']);
+Route::put('/reservas/{id}', [ReservasController::class, 'modificar']);
+Route::delete('/reservas/{id}', [ReservasController::class, 'eliminar']);

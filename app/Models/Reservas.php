@@ -9,11 +9,14 @@ class Reservas extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['fecha', 'kilometros', 'destino', 'id_vehiculo', 'id_empleado'];
+
+
     public function vehiculos(){
-        return $this->belongsTo(Vehiculos::class, 'id_vehiculos', 'id');
+        return $this->hasOne(Vehiculos::class, 'id', 'id_vehiculo');
     }
 
     public function empleados(){
-        return $this->belongsTo(Empleados::class, 'id_empleados', 'id');
+        return $this->hasOne(Empleados::class, 'id', 'id_empleado');
     }
 }

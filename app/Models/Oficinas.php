@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Empleados;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Oficinas extends Model
 {
@@ -12,4 +13,7 @@ class Oficinas extends Model
     // public function empleados(){
     //     return $this->belongsTo(Empleados::class, 'id_oficinas')
     // }
+    public function empleados(){
+        return $this->belongsTo(Empleados::class);
+    }
 }
