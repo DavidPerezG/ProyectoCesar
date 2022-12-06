@@ -115,6 +115,7 @@ class EmpleadosController extends Controller
             'apellidos' => 'string',
             'salario' => 'string',
             'fecha' => 'date',
+            'id_oficina'=> 'integer'
         ]);
     }
 }
